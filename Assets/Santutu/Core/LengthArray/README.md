@@ -11,3 +11,6 @@ foreach (var hit in LengthPhysics.SphereCastNonAlloc(ray, 1, 1000, lengthArray))
 }
 ```
 
+See Sample
+---
+https://github.com/santutu/unity-length-array/blob/main/Assets/Santutu/Core/LengthArray/Samples/Sample.cs
