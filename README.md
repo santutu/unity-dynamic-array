@@ -1,0 +1,1 @@
+﻿https://github.com/santutu/unity-length-array/blob/main/Assets/Santutu/Core/LengthArray/README.md

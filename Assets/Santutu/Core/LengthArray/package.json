@@ -1,0 +1,21 @@
+{
+  "name": "com.santutu.lengtharray",
+  "displayName": "Length Array",
+  "version": "0.1.0",
+  "unity": "2018.4",
+  "description": "A library for arrays with valid length information.",
+  "keywords": [
+    "unity",
+    "array",
+    "length"
+  ],
+  "author": {
+    "name": "santutu"
+  },
+  "license": "MIT",
+  "licensesUrl": "https://github.com/santutu/unity-length-array/blob/main/Assets/Santutu/Core/LengthArray/LICENSE",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/santutu/unity-length-array.git?path=/Assets/Santutu/Core/LengthArray"
+  }
+}
