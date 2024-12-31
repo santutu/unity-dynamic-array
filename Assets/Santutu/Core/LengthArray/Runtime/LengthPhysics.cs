@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using Physics = UnityEngine.Physics;
+using System;
 
 namespace Santutu.Core.LengthArray.Runtime
 {
@@ -36,8 +37,8 @@ namespace Santutu.Core.LengthArray.Runtime
                 {
                     break;
                 }
-
-                receiver.items = new RaycastHit[count + NewPadding];
+                
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
             receiver.Length = count;
@@ -75,7 +76,7 @@ namespace Santutu.Core.LengthArray.Runtime
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
             receiver.Length = count;
@@ -102,7 +103,7 @@ namespace Santutu.Core.LengthArray.Runtime
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
             receiver.Length = count;
@@ -130,7 +131,7 @@ namespace Santutu.Core.LengthArray.Runtime
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
             receiver.Length = count;
@@ -142,7 +143,7 @@ namespace Santutu.Core.LengthArray.Runtime
         public static IReadonlyLengthArray<Collider> OverlapBoxNonAlloc(
             Vector3 center,
             Vector3 halfExtents,
-            LengthArray<Collider> results,
+            LengthArray<Collider> receiver,
             Quaternion orientation,
             int layerMask = -1
         )
@@ -151,27 +152,27 @@ namespace Santutu.Core.LengthArray.Runtime
 
             while (true)
             {
-                count = Physics.OverlapBoxNonAlloc(center, halfExtents, results.items, orientation, layerMask);
+                count = Physics.OverlapBoxNonAlloc(center, halfExtents, receiver.items, orientation, layerMask);
 
 
-                if (results.TotalLength > count)
+                if (receiver.TotalLength > count)
                 {
                     break;
                 }
 
-                results.items = new Collider[count + NewPadding];
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
-            results.Length = count;
+            receiver.Length = count;
 
-            return results;
+            return receiver;
         }
 
 
         public static IReadonlyLengthArray<Collider> OverlapSphereNonAlloc(
             Vector3 position,
             float radius,
-            LengthArray<Collider> results,
+            LengthArray<Collider> receiver,
             int layerMask = -1
         )
         {
@@ -179,19 +180,19 @@ namespace Santutu.Core.LengthArray.Runtime
 
             while (true)
             {
-                count = Physics.OverlapSphereNonAlloc(position, radius, results.items, layerMask);
+                count = Physics.OverlapSphereNonAlloc(position, radius, receiver.items, layerMask);
 
-                if (results.TotalLength > count)
+                if (receiver.TotalLength > count)
                 {
                     break;
                 }
-
-                results.items = new Collider[count + NewPadding];
+                
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
-            results.Length = count;
+            receiver.Length = count;
 
-            return results;
+            return receiver;
         }
 
 
@@ -199,7 +200,7 @@ namespace Santutu.Core.LengthArray.Runtime
             Vector3 point0,
             Vector3 point1,
             float radius,
-            LengthArray<Collider> results,
+            LengthArray<Collider> receiver,
             int layerMask = -1
         )
         {
@@ -211,22 +212,22 @@ namespace Santutu.Core.LengthArray.Runtime
                     point0: point0,
                     point1: point1,
                     radius: radius,
-                    results: results.items,
+                    results: receiver.items,
                     layerMask: layerMask
                 );
 
 
-                if (results.TotalLength > count)
+                if (receiver.TotalLength > count)
                 {
                     break;
                 }
 
-                results.items = new Collider[count + NewPadding];
+                Array.Resize(ref receiver.items, count + NewPadding);
             }
 
-            results.Length = count;
+            receiver.Length = count;
 
-            return results;
+            return receiver;
         }
     }
 }
