@@ -114,8 +114,8 @@ namespace Santutu.Core.DynamicArray.Runtime
         public static IReadonlyDynamicArray<RaycastHit> SphereCastNonAlloc(
             Ray ray,
             float radius,
-            float maxDistance,
             DynamicArray<RaycastHit> receiver,
+            float maxDistance,
             int layerMask = -1
         )
         {

@@ -13,7 +13,7 @@ namespace Santutu.Core.DynamicArray.Samples
             var ray = new Ray(transform.position, transform.forward);
 
             //you can loop using foreach.
-            var results = DPhysics.SphereCastNonAlloc(ray, 1, 1000, array);
+            var results = DPhysics.SphereCastNonAlloc(ray, 1, array, 1000);
 
             foreach (var hit in results)
             {
@@ -21,7 +21,7 @@ namespace Santutu.Core.DynamicArray.Samples
             }
 
             //the original style.
-            var results2 = DPhysics.SphereCastNonAlloc(ray, 1, 1000, array);
+            var results2 = DPhysics.SphereCastNonAlloc(ray, 1, array, 1000);
 
             for (var i = 0; i < results2.Length; i++)
             {
