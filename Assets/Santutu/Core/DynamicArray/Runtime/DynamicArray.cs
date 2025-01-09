@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Santutu.Core.LengthArray.Runtime
+namespace Santutu.Core.DynamicArray.Runtime
 {
     [Serializable]
-    public class LengthArray<T> : IReadonlyLengthArray<T>, ICovarianceReadonlyLengthArray<T>
+    public class DynamicArray<T> : IReadonlyDynamicArray<T>, IReadOnlyCovariantDynamicArray<T>
     {
         [SerializeField] public T[] items;
         public int Count => Length;
@@ -15,7 +15,7 @@ namespace Santutu.Core.LengthArray.Runtime
         public int padding = 5;
         public int TotalLength => items.Length;
 
-        public LengthArray(int capacity = 25)
+        public DynamicArray(int capacity = 25)
         {
             items = new T[capacity];
             Length = 0;
@@ -24,6 +24,10 @@ namespace Santutu.Core.LengthArray.Runtime
         public void Clear()
         {
             Length = 0;
+            for (var i = 0; i < items.Length; i++)
+            {
+                items[i] = default;
+            }
         }
 
         public void Add(T item)
@@ -80,9 +84,9 @@ namespace Santutu.Core.LengthArray.Runtime
             return GetEnumerator();
         }
 
-        public LengthArrayEnumerator<T> GetEnumerator()
+        public DynamicArrayEnumerator<T> GetEnumerator()
         {
-            return new LengthArrayEnumerator<T>(this);
+            return new DynamicArrayEnumerator<T>(this);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

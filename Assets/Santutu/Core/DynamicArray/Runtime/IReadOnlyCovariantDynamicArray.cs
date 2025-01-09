@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace Santutu.Core.LengthArray.Runtime
+namespace Santutu.Core.DynamicArray.Runtime
 {
-    public interface ICovarianceReadonlyLengthArray<out T> : IEnumerable<T>
+    public interface IReadOnlyCovariantDynamicArray<out T> : IEnumerable<T>
     {
         public int Count { get; }
         public int Length { get; set; }

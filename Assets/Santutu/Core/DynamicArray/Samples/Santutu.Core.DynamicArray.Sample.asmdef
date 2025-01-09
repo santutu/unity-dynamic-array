@@ -1,0 +1,16 @@
+{
+    "name": "Santutu.Core.DynamicArray.Sample",
+    "rootNamespace": "",
+    "references": [
+        "GUID:90c7945427f54f5d9183f64428ed4265"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,9 +1,7 @@
 {
-    "name": "Santutu.Core.LengthArray.Samples",
+    "name": "Santutu.Core.DynamicArray",
     "rootNamespace": "",
-    "references": [
-        "GUID:90c7945427f54f5d9183f64428ed4265"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

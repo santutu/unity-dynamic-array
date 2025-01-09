@@ -1,19 +1,19 @@
-﻿using Santutu.Core.LengthArray.Runtime;
+﻿using Santutu.Core.DynamicArray.Runtime;
 using UnityEngine;
 
-namespace Santutu.Core.LengthArray.Samples
+namespace Santutu.Core.DynamicArray.Samples
 {
     public class Sample : MonoBehaviour
     {
         //don't worry about the array size. It's a trivial and unnecessary.
-        [SerializeField] public LengthArray<RaycastHit> array = new();
+        [SerializeField] public DynamicArray<RaycastHit> array = new();
 
         private void Start()
         {
             var ray = new Ray(transform.position, transform.forward);
 
             //you can loop using foreach.
-            var results = LengthPhysics.SphereCastNonAlloc(ray, 1, 1000, array);
+            var results = DPhysics.SphereCastNonAlloc(ray, 1, 1000, array);
 
             foreach (var hit in results)
             {
@@ -21,7 +21,7 @@ namespace Santutu.Core.LengthArray.Samples
             }
 
             //the original style.
-            var results2 = LengthPhysics.SphereCastNonAlloc(ray, 1, 1000, array);
+            var results2 = DPhysics.SphereCastNonAlloc(ray, 1, 1000, array);
 
             for (var i = 0; i < results2.Length; i++)
             {
@@ -36,7 +36,7 @@ namespace Santutu.Core.LengthArray.Samples
             Log(results);
         }
 
-        private void Log(IReadonlyLengthArray<RaycastHit> raycastHits)
+        private void Log(IReadonlyDynamicArray<RaycastHit> raycastHits)
         {
             foreach (var raycastHit in raycastHits)
             {
