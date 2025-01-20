@@ -29,11 +29,30 @@ namespace Santutu.Core.DynamicArray.Samples
             }
 
             Debug.Log(array.Length); //number of detected collisions
-            Debug.Log(array.TotalLength); //actual array size
+            Debug.Log(array.Capacity); //actual array size
             Debug.Log(array[0]); //accessing array elements
 
             //pass the result to another function.
             Log(results);
+
+
+            //pool
+            using var array2 = DynamicArray<Collider>.Get();
+            
+            var results3 = DPhysics.OverlapSphereNonAlloc(transform.position, 1, array2);
+            
+            foreach (var collider in results3)
+            {
+                Debug.Log(collider.name);
+            }
+
+            //pool shorthand
+            using var result4 = DPhysics.OverlapSphereNonAllocFromPool(transform.position, 1);
+            
+            foreach (var collider in result4)
+            {
+                Debug.Log(collider.name);
+            }
         }
 
         private void Log(IReadonlyDynamicArray<RaycastHit> raycastHits)

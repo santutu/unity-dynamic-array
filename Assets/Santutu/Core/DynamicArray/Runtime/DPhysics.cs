@@ -3,11 +3,8 @@ using Physics = UnityEngine.Physics;
 
 namespace Santutu.Core.DynamicArray.Runtime
 {
-    public static class DPhysics
+    public static partial class DPhysics
     {
-        public static int NewPadding = 40;
-
-
         public static IReadonlyDynamicArray<RaycastHit> BoxCastNonAlloc(
             Vector3 center,
             Vector3 halfExtents,
@@ -32,12 +29,12 @@ namespace Santutu.Core.DynamicArray.Runtime
                     layerMask
                 );
 
-                if (receiver.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                receiver.items = new RaycastHit[count + receiver.padding];
             }
 
             receiver.Length = count;
@@ -70,12 +67,12 @@ namespace Santutu.Core.DynamicArray.Runtime
                     layerMask
                 );
 
-                if (receiver.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                receiver.items = new RaycastHit[count + receiver.padding];
             }
 
             receiver.Length = count;
@@ -97,12 +94,12 @@ namespace Santutu.Core.DynamicArray.Runtime
             {
                 count = Physics.RaycastNonAlloc(origin, direction, receiver.items, maxDistance, layerMask);
 
-                if (receiver.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                receiver.items = new RaycastHit[count + receiver.padding];
             }
 
             receiver.Length = count;
@@ -125,12 +122,12 @@ namespace Santutu.Core.DynamicArray.Runtime
             {
                 count = Physics.SphereCastNonAlloc(ray, radius, receiver.items, maxDistance, layerMask);
 
-                if (receiver.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                receiver.items = new RaycastHit[count + NewPadding];
+                receiver.items = new RaycastHit[count + receiver.padding];
             }
 
             receiver.Length = count;
@@ -142,7 +139,7 @@ namespace Santutu.Core.DynamicArray.Runtime
         public static IReadonlyDynamicArray<Collider> OverlapBoxNonAlloc(
             Vector3 center,
             Vector3 halfExtents,
-            DynamicArray<Collider> results,
+            DynamicArray<Collider> receiver,
             Quaternion orientation,
             int layerMask = -1
         )
@@ -151,27 +148,27 @@ namespace Santutu.Core.DynamicArray.Runtime
 
             while (true)
             {
-                count = Physics.OverlapBoxNonAlloc(center, halfExtents, results.items, orientation, layerMask);
+                count = Physics.OverlapBoxNonAlloc(center, halfExtents, receiver.items, orientation, layerMask);
 
 
-                if (results.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                results.items = new Collider[count + NewPadding];
+                receiver.items = new Collider[count + receiver.padding];
             }
 
-            results.Length = count;
+            receiver.Length = count;
 
-            return results;
+            return receiver;
         }
 
 
         public static IReadonlyDynamicArray<Collider> OverlapSphereNonAlloc(
             Vector3 position,
             float radius,
-            DynamicArray<Collider> results,
+            DynamicArray<Collider> receiver,
             int layerMask = -1
         )
         {
@@ -179,27 +176,29 @@ namespace Santutu.Core.DynamicArray.Runtime
 
             while (true)
             {
-                count = Physics.OverlapSphereNonAlloc(position, radius, results.items, layerMask);
+                count = Physics.OverlapSphereNonAlloc(position, radius, receiver.items, layerMask);
 
-                if (results.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                results.items = new Collider[count + NewPadding];
+                receiver.items = new Collider[count + receiver.padding];
             }
 
-            results.Length = count;
+            receiver.Length = count;
 
-            return results;
+            return receiver;
         }
+
+    
 
 
         public static IReadonlyDynamicArray<Collider> OverlapCapsuleNonAlloc(
             Vector3 point0,
             Vector3 point1,
             float radius,
-            DynamicArray<Collider> results,
+            DynamicArray<Collider> receiver,
             int layerMask = -1
         )
         {
@@ -211,22 +210,22 @@ namespace Santutu.Core.DynamicArray.Runtime
                     point0: point0,
                     point1: point1,
                     radius: radius,
-                    results: results.items,
+                    results: receiver.items,
                     layerMask: layerMask
                 );
 
 
-                if (results.TotalLength > count)
+                if (receiver.Capacity > count)
                 {
                     break;
                 }
 
-                results.items = new Collider[count + NewPadding];
+                receiver.items = new Collider[count + receiver.padding];
             }
 
-            results.Length = count;
+            receiver.Length = count;
 
-            return results;
+            return receiver;
         }
     }
 }

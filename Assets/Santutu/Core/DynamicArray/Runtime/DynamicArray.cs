@@ -6,14 +6,16 @@ using UnityEngine;
 namespace Santutu.Core.DynamicArray.Runtime
 {
     [Serializable]
-    public class DynamicArray<T> : IReadonlyDynamicArray<T>, IReadOnlyCovariantDynamicArray<T>
+    public class DynamicArray<T> : IReadonlyDynamicArray<T>, IReadOnlyCovariantDynamicArray<T>, IDisposable
     {
         [SerializeField] public T[] items;
         public int Count => Length;
         [field: SerializeField] public int Length { get; set; }
 
-        public int padding = 5;
-        public int TotalLength => items.Length;
+        public int padding = 30;
+        public int Capacity => items.Length;
+
+        public T this[int index] { get => items[index]; set => items[index] = value; }
 
         public DynamicArray(int capacity = 25)
         {
@@ -21,20 +23,12 @@ namespace Santutu.Core.DynamicArray.Runtime
             Length = 0;
         }
 
-        public void Clear()
-        {
-            Length = 0;
-            for (var i = 0; i < items.Length; i++)
-            {
-                items[i] = default;
-            }
-        }
 
         public void Add(T item)
         {
-            if (TotalLength < Length + 1)
+            if (Capacity < Length + 1)
             {
-                ResizeMaintain(TotalLength + padding);
+                ResizeMaintain(Capacity + padding);
             }
 
 
@@ -44,12 +38,12 @@ namespace Santutu.Core.DynamicArray.Runtime
 
         public bool LessThan(int capacity)
         {
-            return TotalLength < capacity;
+            return Capacity < capacity;
         }
 
         public bool ResizeNewIfLessThan(int capacity)
         {
-            if (TotalLength < capacity)
+            if (Capacity < capacity)
             {
                 ResizeNew(capacity);
                 return true;
@@ -66,37 +60,21 @@ namespace Santutu.Core.DynamicArray.Runtime
 
         public void ResizeMaintain(int capacity)
         {
-            var original = items;
-            items = new T[capacity];
+            Array.Resize(ref items, capacity);
+        }
 
-            for (var i = 0; i < items.Length && i < original.Length; i++)
+        public void Clear()
+        {
+            Length = 0;
+            for (var i = 0; i < items.Length; i++)
             {
-                items[i] = original[i];
+                items[i] = default;
             }
-        }
-
-
-        public T this[int index] { get => items[index]; set => items[index] = value; }
-
-
-        IEnumerator<T> IEnumerable<T>.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
-
-        public DynamicArrayEnumerator<T> GetEnumerator()
-        {
-            return new DynamicArrayEnumerator<T>(this);
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
 
         public void Assign(IEnumerable<T> items, int count)
         {
-            if (count > TotalLength)
+            if (count > Capacity)
             {
                 this.items = new T[count + padding];
             }
@@ -106,9 +84,13 @@ namespace Santutu.Core.DynamicArray.Runtime
             {
                 this[i] = item;
                 i++;
+                if (count <= i)
+                {
+                    break;
+                }
             }
 
-            Length = count;
+            Length = i;
         }
 
         public void Filter(Predicate<T> filter)
@@ -126,6 +108,38 @@ namespace Santutu.Core.DynamicArray.Runtime
             }
 
             Length = insertIndex;
+        }
+
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+
+        IEnumerator<T> IEnumerable<T>.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+
+        public DynamicArrayEnumerator<T> GetEnumerator()
+        {
+            return new DynamicArrayEnumerator<T>(this);
+        }
+
+        public static DynamicArray<T> Get()
+        {
+            return DynamicArrayPool<T>.Get();
+        }
+
+        public void Release()
+        {
+            DynamicArrayPool<T>.Return(this);
+        }
+
+        public void Dispose()
+        {
+            Release();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Santutu.Core.DynamicArray.Runtime
     {
         public int Count { get; }
         public int Length { get; set; }
-        public int TotalLength { get; }
+        public int Capacity { get; }
         public T this[int index] { get; }
     }
 }

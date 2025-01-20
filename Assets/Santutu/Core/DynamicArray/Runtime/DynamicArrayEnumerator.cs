@@ -5,20 +5,20 @@ namespace Santutu.Core.DynamicArray.Runtime
 {
     public struct DynamicArrayEnumerator<T> : IEnumerator<T>
     {
-        private readonly DynamicArray<T> _array;
+        private DynamicArray<T> _colliderReceiver;
 
         private int _current;
 
-        public DynamicArrayEnumerator(DynamicArray<T> array)
+        public DynamicArrayEnumerator(DynamicArray<T> colliderReceiver)
         {
-            _array = array;
+            _colliderReceiver = colliderReceiver;
             _current = -1;
         }
 
         public bool MoveNext()
         {
             _current += 1;
-            return _current < _array.Length;
+            return _current < _colliderReceiver.Length;
         }
 
         public void Reset()
@@ -26,7 +26,7 @@ namespace Santutu.Core.DynamicArray.Runtime
             _current = -1;
         }
 
-        public T Current => _array.items[_current];
+        public T Current => _colliderReceiver.items[_current];
 
         object IEnumerator.Current => Current;
 
